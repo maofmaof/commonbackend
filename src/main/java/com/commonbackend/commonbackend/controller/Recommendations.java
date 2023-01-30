@@ -6,30 +6,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import com.commonbackend.commonbackend.model.Recommendation;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/recommendations")
 public class Recommendations {
 
-    @GetMapping
-    public ResponseEntity<?> getAllRecommendations() {
+    private final WebClient webClient;
 
-        return ResponseEntity.ok().build();
+    public Recommendations(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8083/api/v1").build();
+    }
+
+    @GetMapping
+    public Flux<Recommendation> getAllRecommendations() {
+        return webClient.get().uri("/recommendations").retrieve().bodyToFlux(Recommendation.class);
     }
 
     @PostMapping
-    public ResponseEntity<?> addRecommendation(@RequestBody Object obj) {
+    public Recommendation addRecommendation(@RequestBody Recommendation recommendation) {
 
-        return ResponseEntity.ok().build();
+        webClient.post().uri("/recommendation").body(Mono.just(recommendation), Recommendation.class).retrieve()
+                .bodyToMono(Recommendation.class);
+        return recommendation;
     }
 
 }
-
-/*
- * • Get all recommendations
- * GET /recommendations
- * Returns an array of recommendation objects
- * • Add a recommendation
- * POST /recommendation
- * Provide a recommendation as request object
- */
