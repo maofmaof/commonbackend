@@ -41,9 +41,9 @@ public class OrderService {
   public Order addOrder(String customerId, int productId) {
 
     var date = new Date();
-    Order order = new Order(customerId, date, date, date);
-    order = orderRepository.save(order);
 
+    Order order = new Order(customerId, date, date, date);
+    
     Product product = productRepository.findById(productId).get();
     product.setUnitsInStock(product.getUnitsInStock() - 1);
     product.setUnitsOnorder(product.getUnitsOnorder() + 1);
@@ -55,9 +55,10 @@ public class OrderService {
     orderDetails.setOrderProduct(order, product);
     orderDetailsSet.add(orderDetails);
     
-    order.setOrderDetails(orderDetailsSet);
+    order.setOrderDetails(orderDetailsSet); 
 
-
+    orderRepository.save(order);
+    
     return orderRepository.findById(order.getOrderId()).get();
   }
 

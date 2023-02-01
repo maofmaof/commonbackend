@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name="order details") //heter så med docker 
+@Table(name="order details") 
 public class OrderDetails {
 
     @EmbeddedId
