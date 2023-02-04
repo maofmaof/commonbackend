@@ -1,7 +1,6 @@
 package com.commonbackend.commonbackend.model;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;

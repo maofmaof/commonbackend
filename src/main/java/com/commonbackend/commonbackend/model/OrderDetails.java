@@ -24,7 +24,7 @@ public class OrderDetails {
     OrderDetailsPK id;
    
     private double unitPrice;
-    private String quantity;
+    private int quantity;
     private double Discount; // Skippar discount
 
     @JsonIgnore
@@ -46,7 +46,7 @@ public class OrderDetails {
         this.id = id;
     }
 
-    public OrderDetails(double unitPrice, String quantity, double Discount) {
+    public OrderDetails(double unitPrice, int quantity, double Discount) {
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.Discount = Discount;
@@ -58,7 +58,7 @@ public class OrderDetails {
         this.id = new OrderDetailsPK(order.getOrderId(), product.getProductId());
     }
 
-    public OrderDetails(double unitPrice, String quantity) {
+    public OrderDetails(double unitPrice, int quantity) {
         this.unitPrice = unitPrice;
         this.quantity = quantity;
     }
